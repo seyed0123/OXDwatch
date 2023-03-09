@@ -1,6 +1,9 @@
 package org.example;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 class User {
     /*
@@ -10,27 +13,109 @@ class User {
     *  *** NOTE: All search functions in user are for searching in favorite shows ***
     */
 
+    private final String username;
+    private String password;
+    private String lastGenre;
+    private final ArrayList <TVShow> favoriteShow;
+    public User (String name ,String password)
+    {
+        this.username = name;
+        this.password=HashPassword(password);
+        favoriteShow = new ArrayList<>();
+    }
+    private String HashPassword(String passwordToHash)
+    {
+        String generatedPassword = null;
+        try
+        {
+            // Create MessageDigest instance for MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
 
-    public ArrayList<TVShow> searchByTitle(String title) {
-        // Implement search by title in favorite shows  logic here
-        return null;
+            // Add password bytes to digest
+            md.update(passwordToHash.getBytes());
+
+            // Get the hash's bytes
+            byte[] bytes = md.digest();
+
+            // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            }
+
+            // Get complete hashed password in hex format
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(generatedPassword);
+        return generatedPassword;
     }
-    public ArrayList<TVShow> searchByGenre(String genre) {
-        // Implement search by genre in favorite shows  logic here
-        return null;
+    public boolean setPassword(String password , String oldPassword)
+    {
+        if(!Objects.equals(HashPassword(oldPassword),this.password))
+            return false;
+        this.password=HashPassword(password);
+        return true;
     }
-    public ArrayList<TVShow> searchByReleaseYear(int year) {
-        // Implement search by release year in favorite shows logic here
-        return null;
+    public boolean checkPassword(String password)
+    {
+        String genPass=HashPassword(password);
+        return Objects.equals(this.password, genPass);
     }
     public void addToFavorites(TVShow show) {
         // Implement add to favorites logic here
+            this.favoriteShow.add(show);
+            this.lastGenre = show.getGenre();
     }
-    public void viewFavorites() {
-        // Implement view favorites logic here
+    public ArrayList<TVShow> viewFavorites() {
+       return this.favoriteShow;
     }
-    public ArrayList<TVShow> getRecommendations() {
-        // Implement get recommendations logic here
-        return null;
+    public String getRecommendations() {
+        return this.lastGenre;
+    }
+    public ArrayList<TVShow> searchByTitle(String title) {
+        ArrayList<TVShow> ret = new ArrayList<>();
+        for (TVShow show : this.favoriteShow)
+        {
+            if(Objects.equals(show.getTitle(), title))
+                ret.add(show);
+        }
+        return ret;
+    }
+
+    public ArrayList<TVShow> searchByGenre(String genre) {
+        ArrayList<TVShow> ret = new ArrayList<>();
+        for (TVShow show : this.favoriteShow)
+        {
+            if(Objects.equals(show.getGenre(), genre))
+                ret.add(show);
+        }
+        return ret;
+    }
+
+    public ArrayList<TVShow> searchByReleaseYear(double year) {
+        ArrayList<TVShow> ret = new ArrayList<>();
+        for (TVShow show : this.favoriteShow)
+        {
+            if(show.getReleaseYear() == year)
+                ret.add(show);
+        }
+        return ret;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder("User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", lastGenre='" + lastGenre + '\'' +
+                ", favoriteShow= ");
+        for (TVShow show : this.favoriteShow)
+        {
+            ret.append(show.toString());
+        }
+        ret.append("}");
+        return ret.toString();
     }
 }
