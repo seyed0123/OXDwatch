@@ -12,17 +12,27 @@ class NetflixService {
      *The NetflixService should have a User object which represents current user.
      */
 
-    public void addTVShow(TVShow tvShow){
+    public boolean addTVShow(TVShow tvShow){
+        for (TVShow show : shows) {
+            if (show.equals(tvShow))
+                return false;
+        }
        shows.add(tvShow);
+       return true;
     }
-
-    public void addMovie(Movie movie){
-        shows.add(movie);
+    public NetflixService()
+    {
+        users= new HashMap<>();
+        shows = new ArrayList<>();
+        User temp = new User("admin" , "admin");
+        users.put("admin",temp);
     }
-
-    public void createAccount(String username, String password) {
+    public boolean createAccount(String username, String password) {
+        if(users.containsKey(username))
+            return false;
         User user = new User(username , password);
         users.put(username , user);
+        return true;
     }
 
     public boolean login(String username, String password) {
@@ -73,18 +83,22 @@ class NetflixService {
         }
         return ret;
     }
-    public boolean addToFavorites(String username , String title)
+    public boolean addToFavorites(String username , String title,String genre ,int year)
     {
         TVShow show = null;
         for(TVShow tempShow : shows)
         {
-            if(Objects.equals(tempShow.getTitle(), title))
+            if(Objects.equals(tempShow.getTitle(), title) && Objects.equals(genre, tempShow.getGenre()) && year==tempShow.getReleaseYear())
                 show=tempShow;
         }
         if(show==null)
             return false;
         users.get(username).addToFavorites(show);
         return true;
+    }
+    public String showStatus(String username)
+    {
+        return users.get(username).toString();
     }
 }
 

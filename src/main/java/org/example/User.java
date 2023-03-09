@@ -108,12 +108,12 @@ class User {
     public String toString() {
         StringBuilder ret = new StringBuilder("User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", lastGenre='" + lastGenre + '\'' +
                 ", favoriteShow= ");
         for (TVShow show : this.favoriteShow)
         {
             ret.append(show.toString());
+            ret.append("\n");
         }
         ret.append("}");
         return ret.toString();

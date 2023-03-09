@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 class TVShow {
     private String title;
@@ -59,6 +60,10 @@ class TVShow {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+    public boolean equals(TVShow tvShow)
+    {
+        return Objects.equals(this.title, tvShow.getTitle()) && Objects.equals(this.genre, tvShow.getGenre()) && this.releaseYear == tvShow.getReleaseYear() && this.duration == tvShow.getDuration() && this.rating == tvShow.rating;
     }
 
     @Override

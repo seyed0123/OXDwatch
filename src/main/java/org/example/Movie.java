@@ -1,21 +1,19 @@
 package org.example;
 
-import java.util.ArrayList;
-
 class Movie extends TVShow {
-    private String length;
+    private int length;
     /*
      *Movie is extended from TVShow and has extra attribute length.
      */
-    public Movie(String title, String genre, double releaseYear, double duration, double rating , String length)
+    public Movie(String title, String genre, double releaseYear, double duration, double rating , int length)
     {
         super( title, genre,releaseYear,duration, rating);
         this.length=length;
     }
-    public String getLength() {
+    public int getLength() {
         return length;
     }
-    public void setLength(String length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
@@ -24,5 +22,9 @@ class Movie extends TVShow {
         return super.toString()+"Movie{" +
                 "length='" + length + '\'' +
                 '}';
+    }
+    public boolean equals(Movie movie)
+    {
+        return this.length==movie.getLength() && super.equals(movie);
     }
 }
