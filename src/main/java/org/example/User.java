@@ -17,11 +17,13 @@ class User {
     private String password;
     private String lastGenre;
     private final ArrayList <TVShow> favoriteShow;
+    private final ArrayList <TVShow> watchList;
     public User (String name ,String password)
     {
         this.username = name;
         this.password=HashPassword(password);
         favoriteShow = new ArrayList<>();
+        watchList = new ArrayList<>();
     }
     private String HashPassword(String passwordToHash)
     {
@@ -71,6 +73,13 @@ class User {
         this.lastGenre = show.getGenre();
         return true;
     }
+    public boolean addToWatchList(TVShow show)
+    {
+        if(watchList.contains(show))
+            return false;
+        this.watchList.add(show);
+        return true;
+    }
     public String getRecommendations() {
         return this.lastGenre;
     }
@@ -109,8 +118,18 @@ class User {
         StringBuilder ret = new StringBuilder("User{" +
                 "username='" + username + '\'' +
                 ", lastGenre='" + lastGenre + '\'' +
-                ", favoriteShow= ");
+                ", favoriteShow=\n");
+        if(this.favoriteShow.size()==0)
+            ret.append((String) null);
         for (TVShow show : this.favoriteShow)
+        {
+            ret.append(show.toString());
+            ret.append("\n");
+        }
+        ret.append(", WatchList=\n");
+        if(this.watchList.size()==0)
+            ret.append((String) null);
+        for (TVShow show : this.watchList)
         {
             ret.append(show.toString());
             ret.append("\n");

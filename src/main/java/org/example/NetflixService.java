@@ -112,5 +112,18 @@ class NetflixService {
     public ArrayList<TVShow> searchByReleaseYearFavorite(double year , String username) {
         return users.get(username).searchByReleaseYear(year);
     }
+    public boolean addToWatchList(String username , String title,String genre ,double year)
+    {
+        TVShow show = null;
+        for(TVShow tempShow : shows)
+        {
+            if(Objects.equals(tempShow.getTitle(), title) && Objects.equals(genre, tempShow.getGenre()) && year==tempShow.getReleaseYear()) {
+                show = tempShow;
+                if(users.get(username).addToWatchList(show))
+                    return true;
+            }
+        }
+        return show != null;
+    }
 }
 

@@ -76,7 +76,7 @@ public class Main {
     }
     static String Input()
     {
-        return JOptionPane.showInputDialog("1-add TVShow\n2-add movie\n3-search by title\n4-search by genre\n5-search by year\n6-get Recommendations\n7-add to favorite\n8-show favorite\n9-search by title in favorite\n10-search by genre in favorite\n11-search by year in favorite\n12-change password\n13-logout");
+        return JOptionPane.showInputDialog("1-add TVShow\n2-add movie\n3-search by title\n4-search by genre\n5-search by year\n6-get Recommendations\n7-add to favorite\n8-show account details\n9-search by title in favorite\n10-search by genre in favorite\n11-search by year in favorite\n12-change password\n13-add to watch list\n14-logout");
     }
     static boolean Menu(String username)
     {
@@ -174,14 +174,21 @@ public class Main {
                 massage.append(show.toString()).append("\n");
 
             JOptionPane.showMessageDialog(null, massage.toString());
-        } else if (commend == "12") {
+        } else if (Objects.equals(commend, "12")) {
             String password = JOptionPane.showInputDialog("Enter the new password");
             String oldPassword = JOptionPane.showInputDialog("Enter the your old password");
             if(NS.changePassword(username,password,oldPassword))
                 JOptionPane.showMessageDialog(null, "done!!");
             else
                 JOptionPane.showMessageDialog(null, "the old password is wrong.", "ERROR", JOptionPane.ERROR_MESSAGE);
-        } else if (Objects.equals(commend, "13") || commend == null) {
+        } else if(Objects.equals(commend, "13"))
+        {
+            String name = JOptionPane.showInputDialog("Enter the show name");
+            String genre = JOptionPane.showInputDialog("Enter the show genre");
+            int year = Integer.parseInt(getNumberString("Enter the show released year (Write numerically)"));
+            if(!NS.addToWatchList(username , name,genre ,year))
+                JOptionPane.showMessageDialog(null, "this show doesn't found", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else if (Objects.equals(commend, "14") || commend == null) {
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "Was machst du bro?.");
