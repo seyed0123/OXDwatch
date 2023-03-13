@@ -63,13 +63,13 @@ class User {
         String genPass=HashPassword(password);
         return Objects.equals(this.password, genPass);
     }
-    public void addToFavorites(TVShow show) {
+    public boolean addToFavorites(TVShow show) {
         // Implement add to favorites logic here
-            this.favoriteShow.add(show);
-            this.lastGenre = show.getGenre();
-    }
-    public ArrayList<TVShow> viewFavorites() {
-       return this.favoriteShow;
+        if(favoriteShow.contains(show))
+            return false;
+        this.favoriteShow.add(show);
+        this.lastGenre = show.getGenre();
+        return true;
     }
     public String getRecommendations() {
         return this.lastGenre;

@@ -1,7 +1,7 @@
 package org.example;
 
 class Movie extends TVShow {
-    private int length;
+    private final int length;
     /*
      *Movie is extended from TVShow and has extra attribute length.
      */
@@ -13,10 +13,6 @@ class Movie extends TVShow {
     public int getLength() {
         return length;
     }
-    public void setLength(int length) {
-        this.length = length;
-    }
-
     @Override
     public String toString() {
         return super.toString()+"Movie{" +
