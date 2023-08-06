@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 class TVShow {
-    private String title;
-    private String genre;
-    private double releaseYear;
-    private double duration;
-    private double rating;
+    private final String title;
+    private final String genre;
+    private final double releaseYear;
+    private final double duration;
+    private final double rating;
 
     public TVShow(String title, String genre, double releaseYear, double duration, double rating) {
         this.title = title;
@@ -25,41 +25,14 @@ class TVShow {
     public String getTitle() {
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getGenre() {
         return genre;
     }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public double getReleaseYear() {
         return releaseYear;
     }
-
-    public void setReleaseYear(double releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
     public double getDuration() {
         return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
     public boolean equals(TVShow tvShow)
     {
